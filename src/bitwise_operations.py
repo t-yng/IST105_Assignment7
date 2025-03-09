@@ -1,58 +1,57 @@
 import sys
+from typing import Callable
 
 
-def to_numeric(value, name):
+def parseInputValue(value: str):
+    return value.replace(" ", "").split(",")
+
+
+def to_numeric(value):
     try:
         return int(value)
     except ValueError:
-        print(f"{name} value '{value}' is not numeric. Please input numeric value.")
+        print(f"'{value}' is not integers. Please input only integers value.")
         exit(1)
 
 
-def check_positive(value, name):
-    if value < 0:
-        print(
-            f"{name} value {value} is negative. Please input greater than equal zero."
-        )
-        exit(1)
+def filterByThreshold(numbers: list[int], threshold: int):
+    return list(filter(lambda x: x > threshold, numbers))
 
 
-def check_even_by_bitwise(value):
-    return value & 0b01 > 0
+def bitwise_all(numbers: list[int], operate: Callable[[int, int], int]):
+    result = numbers[0]
+    for x in numbers[1:]:
+        result = operate(result, x)
+
+    return result
 
 
-a = to_numeric(sys.argv[1], "A")
-b = to_numeric(sys.argv[2], "B")
-c = to_numeric(sys.argv[3], "C")
-d = to_numeric(sys.argv[4], "D")
-e = to_numeric(sys.argv[5], "E")
+def and_all(numbers: list[int]):
+    return bitwise_all(numbers, lambda a, b: a & b)
 
-numbers = [
-    {"name": "A", "value": a},
-    {"name": "B", "value": b},
-    {"name": "C", "value": c},
-    {"name": "D", "value": d},
-    {"name": "E", "value": e},
-]
 
-for number in numbers:
-    check_positive(number["value"], number["name"])
+def or_all(numbers: list[int]):
+    return bitwise_all(numbers, lambda a, b: a | b)
 
-print("<h3>Average</h3>")
-average = (a + b + c + d + e) / 5
-print(f"<p>The average of numbers: {average}</p>")
-print(f"<p>Is the average greater than 50?: {average > 50}</p>")
 
-print("<h3>Even or Odd</h3>")
-for number in numbers:
-    if check_even_by_bitwise(number["value"]):
-        print(f"<p>{number['name']}: {number['value']} is even.</p>")
-    else:
-        print(f"<p>{number['name']}: {number['value']} is odd.</p>")
+def xor_all(numbers: list[int]):
+    return bitwise_all(numbers, lambda a, b: a ^ b)
 
-print("<h3>Value List greater than 10</h3>")
-original_values = list(filter(lambda x: x > 10, [a, b, c, d, e]))
-sorted_values = sorted(original_values)
-print(f"<p>Original Values: {original_values}</p>")
-print(f"<p>Sorted Values: {sorted_values}</p>")
+
+values = parseInputValue(sys.argv[1])
+numbers = list(map(lambda x: to_numeric(x), values))
+
+if sys.argv[2] is not None:
+    threshold = to_numeric(sys.argv[2])
+    numbers = filterByThreshold(numbers, threshold)
+
+and_result = and_all(numbers)
+or_result = or_all(numbers)
+xor_result = xor_all(numbers)
+
+print(f"<p>Bitwise AND: {and_result}</p>")
+print(f"<p>Bitwise OR: {or_result}</p>")
+print(f"<p>Bitwise XOR: {xor_result}</p>")
+print(f"<p>Numbers greater than threshold: {numbers}</p>")
+
 exit(0)
