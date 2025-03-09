@@ -29,7 +29,7 @@
         margin-right: 6px;
       }
 
-      input[type="number"] {
+      input {
         width: 140px;
         padding: 5px;
       }
@@ -54,24 +54,12 @@
     <h1>Assignment#6 IST105</h1>
     <form action="/process.php" method="GET">
       <div class="form-group">
-        <label for="a">A: </label>
-        <input type="number" id="a" name="a" />
+        <label for="numbers">Numbers: </label>
+        <input type="text" id="numbers" name="numbers" placeholder="3, 5, 7, 9" />
       </div>
       <div class="form-group">
-        <label for="b">B: </label>
-        <input type="number" id="b" name="b" />
-      </div>
-      <div class="form-group">
-        <label for="c">C: </label>
-        <input type="number" id="c" name="c" />
-      </div>
-      <div class="form-group">
-        <label for="d">D: </label>
-        <input type="number" id="d" name="d" />
-      </div>
-      <div class="form-group">
-        <label for="e">E: </label>
-        <input type="number" id="e" name="e" />
+        <label for="threshold">Threshold: </label>
+        <input type="text" id="threshold" name="threshold" placeholder="4" />
       </div>
       <button>Submit</button>
     </form>
