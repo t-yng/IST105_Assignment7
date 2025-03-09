@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment#6 | IST105</title>
+    <title>Assignment#7 | IST105</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -51,7 +51,7 @@
     </style>
   </head>
   <body>
-    <h1>Assignment#6 IST105</h1>
+    <h1>Assignment#7 IST105</h1>
     <form action="/process.php" method="GET">
       <div class="form-group">
         <label for="numbers">Numbers: </label>
